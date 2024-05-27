@@ -1,0 +1,13 @@
+--4. When considering the total number of items purchased from receipts with 'rewardsReceiptStatus' of 'Accepted' or 'Rejected', which is greater?
+
+SELECT 
+    rewardsReceiptStatus,
+    SUM(purchasedItemCount) AS total_items
+FROM 
+    receipts
+WHERE 
+    rewardsReceiptStatus IN ('Accepted', 'Rejected')
+GROUP BY 
+    rewardsReceiptStatus
+ORDER BY 
+    total_items DESC;

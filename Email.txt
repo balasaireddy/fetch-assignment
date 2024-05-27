@@ -1,0 +1,85 @@
+Version 2
+
+Subject: Data Quality Assessment Findings and Next Steps
+
+Hi [Stakeholder's Name],
+
+I hope you're doing well. I have completed the data quality assessment for the receipt, user, and brand datasets. Below are the details of the findings and the next steps.
+
+Data Quality Assessment Findings
+
+1. What questions do you have about the data?
+
+Clarification on Data Definitions and Expectations: Could you provide a detailed data dictionary that defines the expected values and constraints for each column? This would help ensure that we interpret the data correctly and apply appropriate validation rules.
+
+Business Rules Enforcement: Are there specific business rules we need to enforce for data consistency, such as acceptable ranges for totalSpent or required statuses for rewardsReceiptStatus?
+Detailed Findings
+
+Missing Values:
+
+Receipts: Several columns have missing values, including bonusPointsEarned (575), pointsEarned (510), and totalSpent (435).
+
+Users: Missing values in signUpSource (48), state (56), and lastLogin.$date (62).
+
+Brands: Missing values in category (155), categoryCode (650), and topBrand (612).
+
+Duplicate Records:
+
+Receipts: 0 duplicate entries.
+Users: 283 duplicate entries.
+Brands: 0 duplicate entries.
+
+Unique Values:
+
+Unique User IDs in Receipts DataFrame: 258
+Unique IDs in Users DataFrame: 212
+Unique Barcodes in Brands DataFrame: 1,160
+Date Parsing Errors:
+
+Issues with parsing date fields like finishedDate.$date (551 errors), pointsAwardedDate.$date (582 errors), and purchaseDate.$date (448 errors).
+
+Rewards Receipt Status Values:
+The rewardsReceiptStatus field contains the following values: ['FINISHED', 'REJECTED', 'FLAGGED', 'SUBMITTED', 'PENDING']. 
+
+Non-numeric Values:
+Issues identified in 'pointsEarned' (510 NaN values) and 'totalSpent' (435 NaN values).
+
+
+2. How did you discover the data quality issues?
+
+Missing Values: Identified by checking for null values in each column across the datasets.
+Duplicate Records: Detected by examining key identifiers while excluding non-hashable columns.
+Invalid Data Types: Reviewed data types of each column to ensure they match the expected formats.
+Invalid Date Formats: Validated date columns to ensure they contain valid date entries.
+Foreign Key Violations: Cross-referenced IDs in the receipts dataset against the user and brand datasets to ensure all references are valid.
+
+3. What do you need to know to resolve the data quality issues?
+
+Handling Missing Data: How should we handle records with missing values? Should they be removed, or do you prefer a specific method for imputing missing values?
+
+Invalid Foreign Key References: For records with invalid foreign key references, should we create placeholder records, or should we exclude these records from our analysis?
+
+Addressing Invalid Values: What approach should we take for records with invalid values, such as negative totalSpent or unexpected rewardsReceiptStatus?
+
+4. What other information would you need to help you optimize the data assets you're trying to create?
+
+Additional Data Sources: Are there any additional data sources we can integrate to improve data completeness and accuracy?
+
+Data Validation Rules: Could you provide more details on the specific data validation rules we should implement to prevent future data quality issues?
+
+5. What performance and scaling concerns do you anticipate in production and how do you plan to address them?
+
+Data Volume: Given the large volume of data, we need to ensure our data processing pipelines are optimized for performance. Partitioning the data can improve query performance and scalability.
+
+Data Storage: We need to evaluate our current data storage solutions to ensure they can handle the increasing data volume without compromising performance. This might involve considering more scalable storage options.
+
+System Resources: Monitoring system resources such as CPU, memory, and storage is essential to ensure they meet the demands of our data processing workloads. Implementing resource management strategies will help maintain performance.
+
+Next Steps and Recommendations
+
+Monitoring and Reporting: Set up regular data quality monitoring and reporting to identify and address issues promptly.
+
+Please let me know if you have any questions or if there is additional information you can provide to help us proceed with the data quality improvement efforts.
+
+Best regards,
+Balasai Reddy

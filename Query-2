@@ -1,0 +1,54 @@
+--2. How does the ranking of the top 5 brands by receipts scanned for the recent month compare to the ranking for the previous month?
+
+-- Current Month
+WITH current_month AS (
+    SELECT 
+        b.name AS brand_name,
+        COUNT(r._id) AS receipt_count
+    FROM 
+        receipts r
+    JOIN 
+        receipt_items ri ON r._id = ri.receiptId
+    JOIN 
+        brands b ON ri.barcode = b.barcode
+    WHERE 
+        r.dateScanned >= DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '1 month'
+    GROUP BY 
+        b.name
+    ORDER BY 
+        receipt_count DESC
+    LIMIT 5
+),
+-- Previous Month
+previous_month AS (
+    SELECT 
+        b.name AS brand_name,
+        COUNT(r._id) AS receipt_count
+    FROM 
+        receipts r
+    JOIN 
+        receipt_items ri ON r._id = ri.receiptId
+    JOIN 
+        brands b ON ri.barcode = b.barcode
+    WHERE 
+        r.dateScanned >= DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '2 months'
+        AND r.dateScanned < DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '1 month'
+    GROUP BY 
+        b.name
+    ORDER BY 
+        receipt_count DESC
+    LIMIT 5
+)
+SELECT 
+    'Current Month' AS period, 
+    brand_name, 
+    receipt_count 
+FROM 
+    current_month
+UNION ALL
+SELECT 
+    'Previous Month' AS period, 
+    brand_name, 
+    receipt_count 
+FROM 
+    previous_month;

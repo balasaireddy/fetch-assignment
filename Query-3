@@ -1,0 +1,13 @@
+--3. When considering average spend from receipts with 'rewardsReceiptStatus' of 'Accepted' or 'Rejected', which is greater?
+
+SELECT 
+    rewardsReceiptStatus,
+    AVG(totalSpent) AS average_spend
+FROM 
+    receipts
+WHERE 
+    rewardsReceiptStatus IN ('Accepted', 'Rejected')
+GROUP BY 
+    rewardsReceiptStatus
+ORDER BY 
+    average_spend DESC;
